@@ -28,8 +28,6 @@ export class PokemonsService {
         }));
         return simplePokemons;
       }),
-
-      tap(console.log)
     );
   }
 
