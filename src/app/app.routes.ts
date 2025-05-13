@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/pokemons/pokemons-pages.component'),
   },
   {
+    path: 'pokemon/:id',
+    loadComponent: () => import('./pages/pokemon/pokemon-page.component'),
+  },
+  {
     path: 'pricing',
     loadComponent: () => import('./pages/pricing/pricing-pages.component'),
   },
