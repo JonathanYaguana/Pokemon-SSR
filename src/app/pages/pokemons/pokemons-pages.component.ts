@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@ang
 import { PokemonListComponent } from "../../pokemons/components/pokemon-list/pokemon-list.component";
 import { PokemonsService } from '../../pokemons/services/pokemons.service';
 import { SimplePokemon } from '../../pokemons/interfaces';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, tap } from 'rxjs';
 import { PokemonListSkeletonComponent } from './ui/pokemon-list-skeleton/pokemon-list-skeleton.component';
@@ -23,7 +23,7 @@ export default class PokemonsPagesComponent {
   private route = inject(ActivatedRoute);
   private title = inject(Title);
 
-  public currentPage = toSignal(
+  public currentPage = toSignal<number>(
      this.route.params.pipe(
       map( (params) => params['page'] ?? '1' ),
       map( (page) => (isNaN(+page) ? 1 : +page) ),
@@ -33,14 +33,12 @@ export default class PokemonsPagesComponent {
 
   public loadOnPageChanged = effect(
     () => {
-      this.loadPokemons(this.currentPage()!);
+      this.loadPokemons(this.currentPage());
     },
     { allowSignalWrites: true }
   );
 
   public loadPokemons( page = 0 ){
-
-    // const pageToLoad = this.currentPage()! + page;
 
     console.log( {page, currentPage: this.currentPage()!} );
 

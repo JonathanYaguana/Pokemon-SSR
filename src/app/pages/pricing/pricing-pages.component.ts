@@ -13,7 +13,6 @@ export default class PricingPagesComponent implements OnInit{
 
   private title = inject(Title);
   private meta = inject(Meta);
-  private platform = inject(PLATFORM_ID);
 
   ngOnInit(): void {
 
