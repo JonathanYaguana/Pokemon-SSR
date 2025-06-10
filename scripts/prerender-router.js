@@ -27,7 +27,7 @@
     pokemon => `/pokemon/${ pokemon.name }`
   ).join( '\n' );
 
-  fs.writeFileSync('routers.txt', fileContent );
+  fs.writeFileSync('routes.txt', fileContent );
   console.log( 'routers.txt created.' );
 
 }
