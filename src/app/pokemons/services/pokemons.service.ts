@@ -26,7 +26,8 @@ export class PokemonsService {
           (pokemon) => ({
             id: pokemon.url.split('/').at(-2) ?? '',
             name: pokemon.name,
-          }));
+          })
+        );
         return simplePokemons;
       }),
     );

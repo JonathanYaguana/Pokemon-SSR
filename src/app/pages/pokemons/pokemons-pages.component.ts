@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { PokemonListComponent } from "../../pokemons/components/pokemon-list/pokemon-list.component";
 import { PokemonsService } from '../../pokemons/services/pokemons.service';
 import { SimplePokemon } from '../../pokemons/interfaces';
@@ -21,7 +21,6 @@ export default class PokemonsPagesComponent {
   public pokemons = signal<SimplePokemon[]>([]);
 
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private title = inject(Title);
 
   public currentPage = toSignal(
@@ -31,15 +30,6 @@ export default class PokemonsPagesComponent {
       map( (page) => Math.max(1, page) ),
     )
   );
-  //public isLoading = signal(true);
-
-  // ngOnInit(): void {
-  //   // setTimeout(() => {
-  //   //   this.isLoading.set(false);
-  //   // }, 1500);
-  //   console.log(this.currentPage());
-  //   this.loadPokemons();
-  // }
 
   public loadOnPageChanged = effect(
     () => {
@@ -50,16 +40,13 @@ export default class PokemonsPagesComponent {
 
   public loadPokemons( page = 0 ){
 
-    const pageToLoad = this.currentPage()! + page;
+    // const pageToLoad = this.currentPage()! + page;
 
-    console.log( {pageToLoad, currentPage: this.currentPage()!} );
+    console.log( {page, currentPage: this.currentPage()!} );
 
-    this.pokemonsService.loadPage( pageToLoad )
+    this.pokemonsService.loadPage( page )
     .pipe(
-      // tap(
-      //   () => this.router.navigate([], { queryParams: { page: pageToLoad } } )
-      // ),
-      tap(() => this.title.setTitle(`Pokémons SSR - Page ${pageToLoad}`)),
+      tap(() => this.title.setTitle(`Pokémons SSR - Page ${ page }`)),
     )
     .subscribe(
       (pokemons) => this.pokemons.set( pokemons )
