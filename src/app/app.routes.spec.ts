@@ -49,4 +49,12 @@ describe('App Routes', () => {
     await router.navigate(['unknownPage']);
     expect(location.path()).toBe('/about');
   })
+
+  it('sould load the proper component for "about" ', async() =>{
+    const aboutRoute = routes.find( (route) => route.path === 'about' )!;
+    expect(aboutRoute).toBeDefined();
+
+    const aboutComponent = await aboutRoute.loadComponent!() as any;
+    expect(aboutComponent.default.name).toBe('AboutPagesComponent');
+  });
 });
