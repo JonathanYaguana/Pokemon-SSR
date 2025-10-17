@@ -25,7 +25,7 @@ const mockPokeApiResponse = {
       ]
 };
 
-const mockResponse = {
+const mockPokemon = {
   id: 1,
   name: 'bulbasaur',
   //TODO: otros campos de la interfaz Pokemon segun sea necesario
@@ -65,6 +65,24 @@ describe('PokemonsService', () => {
     expect(req.request.method).toBe('GET');
 
     req.flush(mockPokeApiResponse);
+  });
+
+
+  it('should load a Pokemons by ID', () => {
+
+    const pokemonName = 'bulbasaur';
+
+    service.loadPokemon(pokemonName).subscribe((pokemon:any) => {
+      expect(pokemon).toEqual(mockPokemon);
+    });
+
+    const req = httpMock.expectOne(
+      `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+    );
+
+    expect(req.request.method).toBe('GET');
+
+    req.flush(mockPokemon);
   });
 
 });
